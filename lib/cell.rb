@@ -12,6 +12,7 @@
    end
 
    def place_ship(ship)
+     @fired_upon = false
      @ship = ship
    end
 
@@ -27,6 +28,7 @@
    end
 
    def render(showing = false)
+    return "." if fired_upon? == false && empty? == false && showing == false
     return "." if fired_upon? == false && empty? == true
     return "M" if fired_upon? == true && empty? == true
     return "S" if showing == true && empty? == false
