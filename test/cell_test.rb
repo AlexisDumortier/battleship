@@ -11,31 +11,26 @@ class CellTest < Minitest::Test
   end
   
   def test_it_has_a_coordinate
-    skip
     cell = Cell.new('B4')
     assert_equal 'B4', cell.coordinate
   end
 
   def test_it_has_no_ship_by_default
-    skip
     cell = Cell.new('B4')
     assert_nil cell.ship
   end
   
   def test_empty_checks_presence_of_ship
-    skip
     cell = Cell.new('B4')
     assert cell.empty?
   end
 
   def test_it_responds_to_place_ship
-    skip
     cell = Cell.new('B4')
     assert_respond_to cell, :place_ship
   end
 
   def test_it_has_a_ship_after_a_ship_is_placed
-    skip
     cell = Cell.new('B4')
     cruiser = Ship.new('Cruiser', 3)
     assert_nil cell.ship
@@ -45,19 +40,16 @@ class CellTest < Minitest::Test
   end
 
   def test_the_cell_is_not_fired_upon_by_default
-    skip
     cell = Cell.new('B4')
     refute cell.fired_upon?
   end
 
   def test_it_responds_to_fire_upon
-    skip
     cell = Cell.new('B4')
     assert_respond_to cell, :place_ship
   end
 
   def test_firing_upon_cell_decreases_health_of_ship_if_any
-    skip
     cell = Cell.new('B4')
     cruiser = Ship.new('Cruiser', 3)
     cell.place_ship(cruiser)
@@ -69,7 +61,6 @@ class CellTest < Minitest::Test
   end
 
   def test_it_renders_correctly
-    skip
     cell = Cell.new('B4')
     cruiser = Ship.new('Cruiser', 3)
     assert_equal '.', cell.render # showing there is not ship on the cell
