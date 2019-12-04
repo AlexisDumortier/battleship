@@ -13,7 +13,7 @@ class CellTest < Minitest::Test
   def test_it_has_a_coordinate
     skip
     cell = Cell.new('B4')
-    assert_equal 'B4', cell.coordinate    
+    assert_equal 'B4', cell.coordinate
   end
 
   def test_it_has_no_ship_by_default
@@ -62,9 +62,9 @@ class CellTest < Minitest::Test
     cruiser = Ship.new('Cruiser', 3)
     cell.place_ship(cruiser)
     assert_equal 3, cell.ship.health
-    cell.fired_upon
+    cell.fire_upon
     assert_equal 2, cell.ship.health
-    cell.fired_upon
+    cell.fire_upon
     assert_equal 1, cell.ship.health
   end
 
@@ -73,15 +73,15 @@ class CellTest < Minitest::Test
     cell = Cell.new('B4')
     cruiser = Ship.new('Cruiser', 3)
     assert_equal '.', cell.render # showing there is not ship on the cell
-    cell.fired_upon
+    cell.fire_upon
     assert_equal 'M', cell.render # showing it was fired upon but missed
     cell.place_ship(cruiser)
     assert_equal 'S', cell.render(true) # showing a ship is on the cell if true passed as argument
     assert_equal '.', cell.render # showing a ship is on the cell
-    cell.fired_upon
+    cell.fire_upon
     assert_equal 'H', cell.render # showing the ship on the cell was hit
-    cell.fired_upon
-    cell.fired_upon
+    cell.fire_upon
+    cell.fire_upon
     assert_equal 'X', cell.render # showing the ship on the cell was sunk
   end
 
