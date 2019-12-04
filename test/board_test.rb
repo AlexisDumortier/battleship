@@ -20,4 +20,12 @@ class BoardTest < Minitest::Test
     end
   end
 
+  def test_it_can_check_that_coordinates_are_valid
+    board = Board.new
+    assert_equal true, board.valid_coordinate?("A1")
+    assert_equal true, board.valid_coordinate?("D4")
+    assert_equal false, board.valid_coordinate?("E1")
+    assert_equal false, board.valid_coordinate?("A22")
+  end
+
 end
