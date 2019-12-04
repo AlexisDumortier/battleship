@@ -29,7 +29,7 @@ class CellTest < Minitest::Test
   end
 
   def test_it_responds_to_place_ship
-    skip/
+    skip
     cell = Cell.new('B4')
     assert_respond_to cell, :place_ship
   end
