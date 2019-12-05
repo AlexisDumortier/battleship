@@ -20,7 +20,7 @@ class Board
         coordinates << letter + number.to_s
       end
     end
-    coordinates 
+    coordinates
   end
 
   def make_cells
@@ -29,7 +29,7 @@ class Board
     coordinates.each do |coordinate|
       cells[coordinate] = Cell.new(coordinate)
     end
-    cells   
+    cells
   end
 
   def valid_coordinate?(coordinate)
@@ -57,6 +57,13 @@ class Board
     return true if (number.uniq.size == 1) && (letter == ascend_letters)
 
     false
+  end
+
+  def place(boat, coordinates)
+    coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      cell.ship = boat
+    end
   end
 
 end
