@@ -20,12 +20,12 @@
      @fired_upon
    end
 
-   def fire_upon
-     @fired_upon = true
-     unless empty?
-       @ship.hit
-     end
-   end
+  def fire_upon
+    if @fired_upon == false && !empty?
+      @ship.hit
+    end
+    @fired_upon = true
+  end
 
    def render(showing = false)
     return "." if fired_upon? == false && empty? == false && showing == false
@@ -35,4 +35,5 @@
     return "X" if ship.sunk? == true && empty? == false
     return "H" if fired_upon? == true && empty? == false
   end
+
  end
