@@ -83,7 +83,6 @@ class BoardTest < Minitest::Test
     cell_3 = board.cells["A3"]
     assert_equal cruiser, cell_1.ship
     assert_equal cruiser, cell_2.ship
-    require "pry"; binding.pry
     assert_equal cruiser, cell_3.ship
   end
 
@@ -95,11 +94,20 @@ class BoardTest < Minitest::Test
     cell_2 = board.cells["A2"]
     cell_3 = board.cells["A3"]
     cell_4 = board.cells["A4"]
-    
+
     assert_equal true, cell_3.ship == cell_2.ship
     assert_equal true, cell_2.ship == cell_1.ship
     assert_equal true, cell_1.ship == cell_3.ship
     assert_equal false, cell_4.ship == cell_2.ship
+  end
+
+  def test_ships_are_not_overlapping
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
   end
 
 end

@@ -37,6 +37,10 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      return false if cell.empty? == false
+    end
     return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates))
     false
   end
@@ -65,5 +69,6 @@ class Board
       cell.ship = boat
     end
   end
+
 
 end
