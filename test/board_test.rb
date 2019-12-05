@@ -2,12 +2,13 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/cell'
 require_relative '../lib/ship'
-require './lib/board'
+require_relative '../lib/board'
 
 class BoardTest < Minitest::Test
 
   def test_it_exists
     board = Board.new
+
     assert_instance_of Board, board
   end
 
@@ -16,12 +17,13 @@ class BoardTest < Minitest::Test
     assert_instance_of Hash, board.cells
     assert_equal 16, board.cells.size
     board.cells.values.each do |value|
-      assert_instance_of Cell, value
+    assert_instance_of Cell, value
     end
   end
 
   def test_it_can_check_that_coordinates_are_valid
     board = Board.new
+
     assert_equal true, board.valid_coordinate?("A1")
     assert_equal true, board.valid_coordinate?("D4")
     assert_equal false, board.valid_coordinate?("E1")
@@ -50,6 +52,7 @@ class BoardTest < Minitest::Test
   def test_coordinates_are_in_ascending_order
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
+
     assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
   end
 
@@ -66,15 +69,9 @@ class BoardTest < Minitest::Test
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
+
     assert_equal true, board.valid_placement?(submarine, ["A1", "A2"])
     assert_equal true, board.valid_placement?(cruiser, ["B1", "C1", "D1"])
-  end
-
-  def test_board_responds_to_place_ship
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
-    assert_respond_to board, :place_ship
   end
 
   def test_that_cell_receives_ship_after_ship_is_placed
@@ -84,15 +81,21 @@ class BoardTest < Minitest::Test
     cell_1 = board.cells["A1"]
     cell_2 = board.cells["A2"]
     cell_3 = board.cells["A3"]
-    assert equal cruiser, cell_1.ship
+    assert_equal cruiser, cell_1.ship
     assert_equal cruiser, cell_2.ship
-    assert_equal crusier, cell_3.ship
+    require "pry"; binding.pry
+    assert_equal cruiser, cell_3.ship
   end
 
-  def test_that_cells_with_same_ship_have_the_same_ship
+  def test_cells_with_same_ship_have_the_same_ship
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+    cell_4 = board.cells["A4"]
+    
     assert_equal true, cell_3.ship == cell_2.ship
     assert_equal true, cell_2.ship == cell_1.ship
     assert_equal true, cell_1.ship == cell_3.ship
