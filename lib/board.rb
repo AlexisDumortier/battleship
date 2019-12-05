@@ -20,7 +20,7 @@ class Board
         coordinates << letter + number.to_s
       end
     end
-    coordinates 
+    coordinates
   end
 
   def make_cells
@@ -29,7 +29,7 @@ class Board
     coordinates.each do |coordinate|
       cells[coordinate] = Cell.new(coordinate)
     end
-    cells   
+    cells
   end
 
   def valid_coordinate?(coordinate)
@@ -37,6 +37,10 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      return false if cell.empty? == false
+    end
     return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates))
     false
   end
@@ -58,5 +62,13 @@ class Board
 
     false
   end
+
+  def place(boat, coordinates)
+    coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      cell.ship = boat
+    end
+  end
+
 
 end
