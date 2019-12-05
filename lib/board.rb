@@ -36,4 +36,27 @@ class Board
     cells.key?(coordinate)
   end
 
+  def valid_placement?(ship, coordinates)
+    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates))
+    false
+  end
+
+  def consecutive_coordinates?(coordinates)
+    letter = []
+    number = []
+    coordinates.each do |coordinate|
+      letter << coordinate[0]
+      number << coordinate[1..-1].to_i
+    end
+    range1 = number[0]..(number[0] + number.length - 1)
+    ascend_numbers = range1.to_a
+    range2 = letter[0]..letter[-1]
+    ascend_letters = range2.to_a
+    return true if (letter.uniq.size == 1) && (number == ascend_numbers)
+
+    return true if (number.uniq.size == 1) && (letter == ascend_letters)
+
+    false
+  end
+
 end
