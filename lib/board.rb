@@ -5,8 +5,9 @@ class Board
   attr_reader :cells
 
   def initialize
-    @cells = make_cells
     @coordinates = make_coordinates
+    @cells = make_cells
+    @size = [ 4, 4 ]
   end
 
   def make_coordinates
@@ -26,8 +27,7 @@ class Board
 
   def make_cells
     cells = {}
-    coordinates = make_coordinates
-    coordinates.each do |coordinate|
+    @coordinates.each do |coordinate|
       cells[coordinate] = Cell.new(coordinate)
     end
     cells
@@ -64,19 +64,27 @@ class Board
     false
   end
 
-  def place(boat, coordinates)
-    coordinates.each do |coordinate|
+  def place(boat, boat_coordinates)
+    boat_coordinates.each do |coordinate|
       cell = cells[coordinate]
       cell.ship = boat
     end
   end
 
   def render(showing = false)
-    rendered_string = []
+    number_range = (1..@size[0]).to_a 
+    alphabet = Hash[(1..26).to_a.zip(('A'..'Z').to_a)]
+    letter_range = ('A'..alphabet[@size[1]]).to_a
+    rendered_string = '  '
+    number_range.each { |num| rendered_string += num.to_s + ' ' }
+    count = 0
     @coordinates.each do |coordinate|
-      cell = cells[coordinate]
-      rendered_string << cell.render(showing)
+      if (count % @size[1]).zero? 
+        rendered_string += "\n" + letter_range[count/@size[1]] + ' '
+      end 
+      count += 1
+      rendered_string += cells[coordinate].render(showing) + ' '
     end
-    rendered_string
+    rendered_string + "\n"
   end
 end
