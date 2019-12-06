@@ -6,6 +6,7 @@ class Board
 
   def initialize
     @cells = make_cells
+    @coordinates = make_coordinates
   end
 
   def make_coordinates
@@ -70,5 +71,12 @@ class Board
     end
   end
 
-
+  def render(showing = false)
+    rendered_string = []
+    @coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      rendered_string << cell.render(showing)
+    end
+    rendered_string
+  end
 end
