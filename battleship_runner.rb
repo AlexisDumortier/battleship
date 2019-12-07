@@ -6,17 +6,9 @@ system('clear')
 
 game = Game.new
 game.play(game.user_input)
+game.setup_game
+game.display_boards
 
-# game class 
-# attributes :
-# - board
-# - users (human, computer)
-# 
-# methods :
-# - add_user
-# - show menu
-# - play
-# - take_turn
 
 # user class
 # attributes :
@@ -32,19 +24,19 @@ game.play(game.user_input)
 
 # in the runner file 
 
-def initialize(name, type)
+# def initialize(name, type)
 
-user1.choose_coordinates
-user2.choose_coordinates
+# user1.choose_coordinates
+# user2.choose_coordinates
 
-def choose_coordinates 
-  if type == human 
-    puts "enter the coordinates"
-    input = get.chomp
-  else
-    random(sjdflsj)
+# def choose_coordinates 
+#   if type == human 
+#     puts "enter the coordinates"
+#     input = get.chomp
+#   else
+#     random(sjdflsj)
 
-end  
+# end  
 
 
 # ship1 = ship(cruiser, 3)

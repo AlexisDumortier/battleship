@@ -13,7 +13,7 @@ class Board
     range = "A".."D"
     range_letters = range.to_a
     range = 1..4
-    range_numbers =  range.to_a
+    range_numbers = range.to_a
 
     range_letters.each do |letter|
       range_numbers.each do |number|
@@ -37,7 +37,8 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates))
+    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates)) && !(overlapping?(coordinates))
+    
     false
   end
 
@@ -56,6 +57,13 @@ class Board
 
     return true if (number.uniq.size == 1) && (letter == ascend_letters)
 
+    false
+  end
+
+  def overlapping?(coordinates)
+    coordinates.each do |coordinate|
+      return true if !git cells[coordinate].empty?
+    end
     false
   end
 
