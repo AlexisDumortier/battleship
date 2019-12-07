@@ -33,4 +33,35 @@ class GameTest < Minitest::Test
     assert_equal hash2, @game.users
   end
 
+  def user_input 
+    # User is shown the main menu where they can play or quit
+    puts 'Welcome to BATTLESHIP'
+    puts 'Enter p to play. Enter q to quit.'
+    input = gets.chomp
+
+    while input.lowercase != 'p' || input.lowercase != 'q'
+      puts 'Please enter p to play and q to quit.'
+      input = gets.chomp
+    end
+    return input 
+  end
+
+
+  def play(input)
+    if input == 'q'
+      return done 
+    else 
+
+      # setup the game [ make a new board, place computer ships, place user ships]
+      # while computer_wins != true or human_wins != true
+      #   take_turn [stores the moves]
+      #   render
+      # end
+    end
+  end
+
+  def setup_game
+
+
+  end
 end

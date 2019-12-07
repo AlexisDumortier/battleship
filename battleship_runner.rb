@@ -1,7 +1,7 @@
 require './lib/board'
 require './lib/cell'
 require './lib/ship'
-
+require './lib/game'
 system('clear')
 
 game = Game.new
@@ -9,47 +9,42 @@ game.play(game.user_input)
 
 # game class 
 # attributes :
-# - ships {name => type, ...}
 # - board
-# - turns
 # - users (human, computer)
 # 
 # methods :
+# - add_user
 # - show menu
 # - play
 # - take_turn
 
-def user_input 
-  # User is shown the main menu where they can play or quit
-  puts 'Welcome to BATTLESHIP'
-  puts 'Enter p to play. Enter q to quit.'
-  input = gets.chomp
-
-  while input.lowercase != 'p' || input.lowercase != 'q'
-    puts 'Please enter p to play and q to quit.'
-    input = gets.chomp
-  end
-  return input 
-end
-
-def play(input)
-  if input == 'q'
-    return done 
-  else 
-
-    # setup the game [ make a new board, place computer ships, place user ships]
-    # while computer_wins != true or human_wins != true
-    #   take_turn [stores the moves]
-    #   render
-    # end
-  end
-end
-
-def setup_game
-
-
+# user class
+# attributes :
+# - ships   { cruiser => [], submarine => [] }
+# - name
+# - type (human or computer)
+# - turns []
+#
+# methods :
+# - place_ship(cruiser, ['A1', 'A2', 'A3'])
+# - fire_at_coordinate('A1')
+#.-.choose_coordinates
 
 # in the runner file 
+
+def initialize(name, type)
+
+user1.choose_coordinates
+user2.choose_coordinates
+
+def choose_coordinates 
+  if type == human 
+    puts "enter the coordinates"
+    input = get.chomp
+  else
+    random(sjdflsj)
+
+end  
 
 
 # ship1 = ship(cruiser, 3)
