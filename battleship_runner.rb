@@ -6,9 +6,11 @@ system('clear')
 
 game = Game.new
 game.play(game.user_input)
-game.setup_game
+game.setup
+game.ship_placement
 game.display_boards
-
+game.ship_placement_computer
+game.display_boards
 
 # user class
 # attributes :

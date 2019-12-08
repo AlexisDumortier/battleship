@@ -5,14 +5,16 @@ class Board
   attr_reader :cells
 
   def initialize
+    @coordinates = make_coordinates('D', 4)
     @cells = make_cells
+    @size = [ 4, 4 ]
   end
 
-  def make_coordinates
+  def make_coordinates(letter, num, first_letter = "A", first_num = 1)
     coordinates = []
-    range = "A".."D"
+    range = first_letter..letter
     range_letters = range.to_a
-    range = 1..4
+    range = first_num..num
     range_numbers = range.to_a
 
     range_letters.each do |letter|
@@ -20,16 +22,29 @@ class Board
         coordinates << letter + number.to_s
       end
     end
-    coordinates 
+    coordinates
   end
 
   def make_cells
     cells = {}
-    coordinates = make_coordinates
-    coordinates.each do |coordinate|
+    @coordinates.each do |coordinate|
       cells[coordinate] = Cell.new(coordinate)
     end
-    cells   
+    cells
+  end
+
+  def random_coordinate_generator(orientation, length)
+    alphabet = Hash[(1..26).to_a.zip(('A'..'Z').to_a)]
+    letter_range = ('A'..alphabet[@size[1]]).to_a
+    if orientation == 1
+      coord = make_coordinates(letter_range[@size[1]-length], @size[0])
+      start = coord[rand(coord.size)-1]
+      return make_coordinates((start[0].ord + length - 1).chr, start[1].to_i, start[0] , start[1].to_i)
+    else
+      coord = make_coordinates(letter_range[@size[1]-1], @size[0]-length+1)
+      start = coord[rand(coord.size)-1]
+      return make_coordinates(start[0], start[1].to_i+length-1, start[0] , start[1].to_i)
+    end
   end
 
   def valid_coordinate?(coordinate)
@@ -37,8 +52,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates)) && !(overlapping?(coordinates))
-    
+    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates)) && (!overlapping?(coordinates))
     false
   end
 
@@ -62,9 +76,32 @@ class Board
 
   def overlapping?(coordinates)
     coordinates.each do |coordinate|
-      return true if !git cells[coordinate].empty?
+      return true if !cells[coordinate].empty?
     end
     false
   end
 
+  def place(boat, boat_coordinates)
+    boat_coordinates.each do |coordinate|
+      cell = cells[coordinate]
+      cell.ship = boat
+    end
+  end
+
+  def render(showing = false)
+    number_range = (1..@size[0]).to_a 
+    alphabet = Hash[(1..26).to_a.zip(('A'..'Z').to_a)]
+    letter_range = ('A'..alphabet[@size[1]]).to_a
+    rendered_string = '  '
+    number_range.each { |num| rendered_string += num.to_s + ' ' }
+    count = 0
+    @coordinates.each do |coordinate|
+      if (count % @size[1]).zero? 
+        rendered_string += "\n" + letter_range[count/@size[1]] + ' '
+      end 
+      count += 1
+      rendered_string += cells[coordinate].render(showing) + ' '
+    end
+    rendered_string + "\n"
+  end
 end

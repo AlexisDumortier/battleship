@@ -5,11 +5,10 @@ require './lib/user'
 
 class Game
 
-  attr_reader :ship, :board, :users
+  attr_reader :ship, :users
 
   def initialize 
     @ship = {}
-    @board = Board.new
     @users = Hash.new
   end
 
@@ -48,7 +47,7 @@ class Game
       end
   end
 
-  def setup_game
+  def setup
     puts "Please enter your name : \n"
     input = gets.chomp
     
@@ -64,9 +63,36 @@ class Game
 
   def display_boards
     puts "=============COMPUTER BOARD=============\n"
-    @users[:user2].board.render 
+    puts @users[:user2].board.render(true)
     puts "==============PLAYER BOARD==============\n"
-    @users[:user1].board.render 
+    puts @users[:user1].board.render(true)
   end
 
-end
+  def ship_placement 
+    ships = [["Cruiser", 3], ["Submarine", 2]]
+    ships.each do |ship|
+      puts "Enter the squares for the #{ship[0]} (#{ship[1]} spaces):"
+      input = gets.chomp
+      boat = Ship.new(ship[0], ship[1])
+      while !@users[:user1].board.valid_placement?(boat, input.split)
+        puts "Those are invalid coordinates. Please try again:"
+        input = gets.chomp
+      end
+      @users[:user1].place_ship(boat, input.split)
+    end
+  end
+
+  def ship_placement_computer 
+
+    ships = [["Cruiser", 3], ["Submarine", 2]]
+    ships.each do |ship|
+      boat = Ship.new(ship[0], ship[1])
+      coordinates = @users[:user2].board.random_coordinate_generator(rand(2), ship[1])
+      while !@users[:user2].board.valid_placement?(boat, coordinates)
+        coordinates = @users[:user2].board.random_coordinate_generator(rand(2), ship[1])
+      end
+      @users[:user2].place_ship(boat, coordinates)
+    end
+  end
+
+end 
