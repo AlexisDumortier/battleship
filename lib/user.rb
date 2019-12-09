@@ -1,31 +1,27 @@
-require_relative './board'
-require_relative './ship'
-
 class User
-
-  attr_reader :type, :name, :turns, :ships
-  attr_accessor :board
-
+  attr_reader :name, :type, :ships, :turns, :board
   def initialize(name, type)
     @name = name
     @type = type
-    @board = Board.new
     @ships = {}
     @turns = []
+    @board = Board.new
   end
 
-  def place_ship(ship, coordinates)
-    if @board.valid_placement?(ship, coordinates)
-      @ships[ship] = coordinates
-      @board.place(ship, coordinates)
+  def place_ship(boat, coordinates)
+    if board.valid_placement?(boat, coordinates)
+      @board.place(boat, coordinates)
+      @ships[boat] = coordinates
     end
+  end
+
+  def choose_coordinate(coordinate)
   end
 
   def fire_at_coordinate(coordinate)
-    if @board.valid_coordinate?(coordinate)
+    if board.valid_coordinate?(coordinate)
       @board.cells[coordinate].fire_upon
-      @turns << coordinate
+      turns << coordinate
     end
   end
-
 end
