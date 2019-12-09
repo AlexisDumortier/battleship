@@ -5,17 +5,17 @@ class Board
   attr_reader :cells
 
   def initialize
-    @coordinates = make_coordinates
+    @coordinates = make_coordinates('D', 4)
     @cells = make_cells
     @size = [ 4, 4 ]
   end
 
-  def make_coordinates
+  def make_coordinates(letter, num, first_letter = "A", first_num = 1)
     coordinates = []
-    range = "A".."D"
+    range = first_letter..letter
     range_letters = range.to_a
-    range = 1..4
-    range_numbers =  range.to_a
+    range = first_num..num
+    range_numbers = range.to_a
 
     range_letters.each do |letter|
       range_numbers.each do |number|
@@ -33,16 +33,26 @@ class Board
     cells
   end
 
+  def random_coordinate_generator(orientation, length)
+    alphabet = Hash[(1..26).to_a.zip(('A'..'Z').to_a)]
+    letter_range = ('A'..alphabet[@size[1]]).to_a
+    if orientation == 1
+      coord = make_coordinates(letter_range[@size[1]-length], @size[0])
+      start = coord[rand(coord.size)-1]
+      return make_coordinates((start[0].ord + length - 1).chr, start[1].to_i, start[0] , start[1].to_i)
+    else
+      coord = make_coordinates(letter_range[@size[1]-1], @size[0]-length+1)
+      start = coord[rand(coord.size)-1]
+      return make_coordinates(start[0], start[1].to_i+length-1, start[0] , start[1].to_i)
+    end
+  end
+
   def valid_coordinate?(coordinate)
     cells.key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
-    coordinates.each do |coordinate|
-      cell = cells[coordinate]
-      return false if cell.empty? == false
-    end
-    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates))
+    return true if (ship.length == coordinates.length) && (consecutive_coordinates?(coordinates)) && (!overlapping?(coordinates))
     false
   end
 
@@ -61,6 +71,13 @@ class Board
 
     return true if (number.uniq.size == 1) && (letter == ascend_letters)
 
+    false
+  end
+
+  def overlapping?(coordinates)
+    coordinates.each do |coordinate|
+      return true if !cells[coordinate].empty?
+    end
     false
   end
 
