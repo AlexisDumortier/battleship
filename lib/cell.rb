@@ -31,9 +31,9 @@
     return "." if fired_upon? == false && empty? == false && showing == false
     return "." if fired_upon? == false && empty? == true
     return "M" if fired_upon? == true && empty? == true
-    return "S" if showing == true && empty? == false
     return "X" if ship.sunk? == true && empty? == false
     return "H" if fired_upon? == true && empty? == false
+    return "S" if showing == true && empty? == false
   end
 
  end

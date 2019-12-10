@@ -4,30 +4,10 @@ require './lib/ship'
 require './lib/game'
 system('clear')
 
-
-
 game = Game.new
-game.play(game.user_input)
+# game.play(game.user_input)
 game.setup
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-game.take_turn
-game.display_boards
-
+game.play
 
 
 # user class
