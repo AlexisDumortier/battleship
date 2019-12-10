@@ -23,9 +23,10 @@ class UserTest < Minitest::Test
 
   def test_it_stores_turns
     user = User.new('Terry', :human)
-    user.fire_at_coordinate('B32')
+    opponent_board = Board.new
+    user.fire_at_coordinate(opponent_board, 'B32')
     assert_equal [], user.turns
-    user.fire_at_coordinate('A1')
+    user.fire_at_coordinate(opponent_board, 'A1')
     assert_equal ['A1'], user.turns
   end
 
@@ -51,7 +52,8 @@ class UserTest < Minitest::Test
 
   def test_it_can_fire_at_coordinate
     user = User.new('Terry', :human)
-    user.fire_at_coordinate('A1')
-    assert_equal true, user.board.cells['A1'].fired_upon?
+    opponent_board = Board.new
+    user.fire_at_coordinate(opponent_board, "A1")
+    assert_equal true, opponent_board.cells['A1'].fired_upon?
   end
 end

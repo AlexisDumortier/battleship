@@ -9,10 +9,26 @@ system('clear')
 game = Game.new
 game.play(game.user_input)
 game.setup
-game.ship_placement
+game.take_turn
 game.display_boards
-game.ship_placement_computer
+game.take_turn
 game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+game.take_turn
+game.display_boards
+
+
 
 # user class
 # attributes :
@@ -26,21 +42,21 @@ game.display_boards
 # - fire_at_coordinate('A1')
 #.-.choose_coordinates
 
-# in the runner file 
+# in the runner file
 
 # def initialize(name, type)
 
 # user1.choose_coordinates
 # user2.choose_coordinates
 
-# def choose_coordinates 
-#   if type == human 
+# def choose_coordinates
+#   if type == human
 #     puts "enter the coordinates"
 #     input = get.chomp
 #   else
 #     random(sjdflsj)
 
-# end  
+# end
 
 
 # ship1 = ship(cruiser, 3)
@@ -61,14 +77,9 @@ game.display_boards
 # place ship 1
 
 # pick random orientation for ship2
-# pick random first coordinate for ship2 
+# pick random first coordinate for ship2
 # while ship2.valid_placement not true
 #   pick random first coordinate for ship2 within the board / using orientation constraint
 #   check valid_placement
 # end
 # place ship 2
-
-
-
-
-
