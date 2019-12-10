@@ -2,7 +2,7 @@ require  './lib/cell'
 
 class Board
 
-  attr_reader :cells
+  attr_reader :cells, :coordinates 
 
   def initialize
     @coordinates = make_coordinates('D', 4)

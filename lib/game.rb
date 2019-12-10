@@ -11,6 +11,7 @@ class Game
     @ship = {}
     @users = Hash.new
     @current_next = [:computer, :human]
+    @winner = nil
   end
 
   def add_user(user)
@@ -35,27 +36,17 @@ class Game
     return input
   end
 
-    def play(input)
-      if input == 'q'
-        return false
-      else
-
-        # setup the game [ make a new board, place computer ships, place user ships]
-        # while computer_wins != true or human_wins != true
-        #   take_turn [stores the moves]
-        #   render
-        # end
+    def play
+      while @winner == nil
+          take_turn
+          display_boards
       end
-  end
+    end
 
   def setup
     puts "Please enter your name : \n"
     input = gets.chomp
     system('clear')
-    # until input.is_a? string
-    #   puts "Please enter your name : \n"
-    #   input = gets.chomp
-    # end
     user1 = User.new(input, :human)
     add_user(user1)
     user2 = User.new('HAL', :computer)
@@ -116,27 +107,35 @@ class Game
         coordinate = gets.chomp
       end
     else
-      coordinate = "B1" #computer shoots
+      temp = @users[:computer].board.coordinates
+      coordinate = temp[rand(temp.size)-1]
+      while @users[:computer].turns.include?(coordinate)
+        coordinate = temp[rand(temp.size)-1]
+      end
     end
     @users[@current_next[0]].fire_at_coordinate(@users[@current_next[1]].board, coordinate)
     print_results(coordinate)
+    sleep(5)
+    check_winner
     @current_next.reverse!
+  end
+ 
+  def check_winner
+    @users[@current_next[0]].ships.each do |ship|
+      return false if !ship[0].sunk?
+    end
+      @winner = @users[@current_next[1]]
   end
 
   def print_results(coordinate)
-    temp1 = @current_next[0] == :human ? "Your" : "My"
-    temp2 = @current_next[0] == :human ? "my" : "your"
+    temp1 = @current_next[0] == :human ? 'Your' : 'My'
+    temp2 = @current_next[0] == :human ? 'my' : 'your'
     if @users[@current_next[1]].board.cells[coordinate].empty?
       puts "#{temp1} shot on #{coordinate} missed."
-      sleep(5)
     elsif !@users[@current_next[1]].board.cells[coordinate].ship.sunk?
       puts "#{temp1} shot on #{coordinate} hit #{temp2} ship."
-      sleep(5)
     else
       puts "#{temp1} shot on #{coordinate} sunk #{temp2} ship!"
-      sleep(5)
     end
   end
-
-
 end
