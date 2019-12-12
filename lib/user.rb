@@ -1,11 +1,11 @@
 class User
   attr_reader :name, :type, :ships, :turns, :board
-  def initialize(name, type)
+  def initialize(name, type, size_board = [4, 4])
     @name = name
     @type = type
     @ships = {}
     @turns = []
-    @board = Board.new
+    @board = Board.new(size_board)
   end
 
   def place_ship(boat, coordinates)

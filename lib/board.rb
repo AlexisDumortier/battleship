@@ -2,12 +2,12 @@ require  './lib/cell'
 
 class Board
 
-  attr_reader :cells, :coordinates 
+  attr_reader :cells, :coordinates
 
-  def initialize
-    @coordinates = make_coordinates('D', 4)
+  def initialize(size = [4, 4])
+    @size = size
+    @coordinates = make_coordinates(ALPHABET[@size[0]], @size[1])
     @cells = make_cells
-    @size = [ 4, 4 ]
   end
 
   ALPHABET = Hash[(1..26).to_a.zip(('A'..'Z').to_a)]
@@ -32,7 +32,7 @@ class Board
   end
 
   def random_coordinate_generator(length_ship)
-    board_letter_range = ('A'..ALPHABET[@size[1]]).to_a
+    board_letter_range = ('A'..ALPHABET[@size[0]]).to_a
     if rand(2) == 1
       random_vertical_coord(length_ship, board_letter_range)
     else
@@ -41,13 +41,13 @@ class Board
   end
 
   def random_vertical_coord(length, letter_range)
-      coord = make_coordinates(letter_range[@size[1]-length], @size[0])
+      coord = make_coordinates(letter_range[@size[0]-length], @size[1])
       start = coord[rand(coord.size)-1]
       make_coordinates((start[0].ord + length - 1).chr, start[1].to_i, start[0] , start[1].to_i)
   end
 
   def random_horizontal_coord(length, letter_range)
-      coord = make_coordinates(letter_range[@size[1]-1], @size[0]-length+1)
+      coord = make_coordinates(letter_range[@size[0]-1], @size[1]-length+1)
       start = coord[rand(coord.size)-1]
       make_coordinates(start[0], start[1].to_i+length-1, start[0] , start[1].to_i)
   end
@@ -103,19 +103,19 @@ class Board
   end
 
   def render(showing = false)
-    board_letter_range = ('A'..ALPHABET[@size[1]]).to_a
-    number_range = (1..@size[0]).to_a 
+    board_letter_range = ('A'..ALPHABET[@size[0]]).to_a
+    number_range = (1..@size[1]).to_a
     rendered_string = '  '
     number_range.each { |num| rendered_string += num.to_s + ' ' }
     count = 0
     @coordinates.each do |coordinate|
-      if (count % @size[1]).zero? 
+      if (count % @size[1]).zero?
         rendered_string += "\n" + board_letter_range[count/@size[1]] + ' '
-      end 
+      end
       count += 1
       rendered_string += cells[coordinate].render(showing) + ' '
     end
     rendered_string + "\n"
   end
-  
+
 end
