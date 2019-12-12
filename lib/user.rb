@@ -21,4 +21,5 @@ class User
       turns << coordinate
     end
   end
+
 end

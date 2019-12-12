@@ -7,18 +7,6 @@ require './lib/board'
 require './lib/game'
 require './lib/user'
 
-# game class 
-# attributes :
-# - board
-# - users (human, computer)
-# 
-# methods :
-# - add_user
-# - show menu
-# - play
-# - take_turn
-
-
 class GameTest < Minitest::Test
 
   def setup

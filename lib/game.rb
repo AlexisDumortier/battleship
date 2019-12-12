@@ -31,7 +31,6 @@ class Game
   end
 
   def game_intro
-    # User is shown the main menu where they can play or quit
     puts "Welcome to BATTLESHIP \n\n"
     puts 'Enter p to play. Enter q to quit.'
     input = gets.chomp
@@ -49,22 +48,23 @@ class Game
   end
 
   def user_choose_board_width
-    puts "Please enter the width of the board:"
+    puts 'Please enter the width of the board (maximum width is 25):'
     input = gets.chomp.strip.to_i
-    while input == 0 || input > 26
-      puts "Please enter the width of the board:"
+    while input <= 0 || input > 26
+      puts 'Please enter the width of the board (maximum width is 25):'
       input = gets.chomp.strip.to_i
     end
     input
   end
 
   def user_choose_board_length
-    puts "Please enter the length of the board (maximum length is 10):"
+    puts 'Please enter the length of the board (maximum length is 10):'
     input = gets.chomp.strip.to_i
-    while input == 0 || input > 10
-      puts "Please enter the length of the board (maximum length is 10):"
+    while input <= 0 || input > 10
+      puts 'Please enter the length of the board (maximum length is 10):'
       input = gets.chomp.strip.to_i
     end
+    system('clear')
     input
   end
 
@@ -78,9 +78,10 @@ class Game
     ship_placement_computer
     puts "'I have laid out my ships on the grid... \n'You now need to lay out your two ships.' \n"
     puts "'The Cruiser is three units long and the Submarine is two units long.' \n \n"
-    puts @users[:computer].board.render(true) + "\n"
+    puts @users[:computer].board.render + "\n"
     ship_placement_human
     display_boards
+    sleep(3)
   end
 
   def show_starting_game
@@ -88,7 +89,7 @@ class Game
     puts "========================================\n"
     puts ' >>>>>>>>>>> STARTING GAME  >>>>>>>>>>> '
     puts "========================================\n\n"
-    sleep(2)
+    sleep(1)
     system('clear')
   end
 
@@ -96,7 +97,7 @@ class Game
     if @users.size < 2
       @users[user.type] = user
     else
-      "cannot add more players"
+      'cannot add more players'
     end
   end
 
@@ -142,7 +143,6 @@ class Game
   end
 
   def take_turn
-    # coordinate = (@current_next[0] == :human ? take_turn_human : take_turn_computer)
     if @current_next[0] == :human
       coordinate = take_turn_human
     else
@@ -150,7 +150,7 @@ class Game
     end
     @users[@current_next[0]].fire_at_coordinate(@users[@current_next[1]].board, coordinate)
     print_results(coordinate)
-    sleep(5)
+    sleep(3)
     check_winner
     @current_next.reverse!
   end
@@ -171,7 +171,6 @@ class Game
     coordinate = shot_coordinate.sample
     while @users[:computer].turns.include?(coordinate)
       coordinate = shot_coordinate.sample
-      # coordinate = shot_coordinate[rand(shot_coordinate.size)-1]
     end
     coordinate
   end
