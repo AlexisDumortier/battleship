@@ -15,9 +15,6 @@ class User
     end
   end
 
-  def choose_coordinate(coordinate)
-  end
-
   def fire_at_coordinate(opponent_board, coordinate)
     if opponent_board.valid_coordinate?(coordinate)
       opponent_board.cells[coordinate].fire_upon

@@ -1,3 +1,4 @@
+require_relative '../test_helper' 
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/cell'
@@ -10,19 +11,22 @@ class CellTest < Minitest::Test
     assert_instance_of Cell, cell 
   end
   
-  def test_it_has_a_coordinate
+  def test_a_cell_has_a_coordinate
     cell = Cell.new('B4')
     assert_equal 'B4', cell.coordinate
   end
 
-  def test_it_has_no_ship_by_default
+  def test_a_cell_has_no_ship_by_default
     cell = Cell.new('B4')
     assert_nil cell.ship
   end
   
   def test_empty_checks_presence_of_ship
     cell = Cell.new('B4')
-    assert cell.empty?
+    assert_equal true, cell.empty?
+    cruiser = Ship.new('Cruiser', 3)
+    cell.ship = cruiser
+    refute cell.empty?
   end
 
   def test_it_responds_to_place_ship
@@ -42,11 +46,6 @@ class CellTest < Minitest::Test
   def test_the_cell_is_not_fired_upon_by_default
     cell = Cell.new('B4')
     refute cell.fired_upon?
-  end
-
-  def test_it_responds_to_fire_upon
-    cell = Cell.new('B4')
-    assert_respond_to cell, :place_ship
   end
 
   def test_firing_upon_cell_once_decreases_health_of_ship_if_any
