@@ -1,4 +1,4 @@
-require_relative '../test_helper' 
+require_relative '../test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/cell'
@@ -19,6 +19,14 @@ class BoardTest < Minitest::Test
     board.cells.values.each do |value|
     assert_instance_of Cell, value
     end
+  end
+
+  def test_the_size_of_the_board_can_change
+    board = Board.new([6, 6])
+    board.cells.values.each do |value|
+    assert_instance_of Cell, value
+    end
+    assert_equal 36, board.cells.size
   end
 
   def test_the_board_can_make_coordinates

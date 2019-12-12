@@ -42,11 +42,38 @@ class Game
     return input
   end
 
+  def user_choose_board_size
+    width = user_choose_board_width
+    length = user_choose_board_length
+    [width, length]
+  end
+
+  def user_choose_board_width
+    puts "Please enter the width of the board:"
+    input = gets.chomp.strip.to_i
+    while input == 0 || input > 26
+      puts "Please enter the width of the board:"
+      input = gets.chomp.strip.to_i
+    end
+    input
+  end
+
+  def user_choose_board_length
+    puts "Please enter the length of the board (maximum length is 10):"
+    input = gets.chomp.strip.to_i
+    while input == 0 || input > 10
+      puts "Please enter the length of the board (maximum length is 10):"
+      input = gets.chomp.strip.to_i
+    end
+    input
+  end
+
   def setup
     show_starting_game
-    user1 = User.new('George', :human)
+    board_size = user_choose_board_size
+    user1 = User.new('George', :human, board_size)
     add_user(user1)
-    user2 = User.new('HAL', :computer)
+    user2 = User.new('HAL', :computer, board_size)
     add_user(user2)
     ship_placement_computer
     puts "'I have laid out my ships on the grid... \n'You now need to lay out your two ships.' \n"
@@ -117,7 +144,7 @@ class Game
   def take_turn
     # coordinate = (@current_next[0] == :human ? take_turn_human : take_turn_computer)
     if @current_next[0] == :human
-      coordinate = take_turn_human 
+      coordinate = take_turn_human
     else
       coordinate = take_turn_computer
     end
@@ -143,12 +170,12 @@ class Game
     shot_coordinate = @users[:computer].board.coordinates
     coordinate = shot_coordinate.sample
     while @users[:computer].turns.include?(coordinate)
-      coordinate = shot_coordinate.sample 
+      coordinate = shot_coordinate.sample
       # coordinate = shot_coordinate[rand(shot_coordinate.size)-1]
     end
     coordinate
   end
- 
+
   def check_winner
     @users[@current_next[1]].ships.each do |ship|
       return false if !ship[0].sunk?
@@ -159,7 +186,7 @@ class Game
 
   def announce_winner
     puts "========================================"
-    if @winner.type == :human 
+    if @winner.type == :human
       puts "!!!!!!!!!!!!!!! YOU WON !!!!!!!!!!!!!! \n"
     else
       puts "!!!!!!!!!!!!!!! I WON !!!!!!!!!!!!!!!! \n"
